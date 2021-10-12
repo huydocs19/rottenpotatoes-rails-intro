@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
           @ratings_to_show = []
         end
     else
-        if session[:ratings] || session[:ratings].empty?
+        if session[:ratings].nil? || session[:ratings].empty?
           @ratings_to_show = @all_ratings
         else
           @ratings_to_show = session[:ratings]
