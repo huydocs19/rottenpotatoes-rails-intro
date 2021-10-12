@@ -33,10 +33,15 @@ class MoviesController < ApplicationController
     else
       @movies = @movies.sorted_by(session[:sorted_by]) || @movies
     end
-    if session[:sorted_by]
-      @sorted_color = "hilite bg-warning"
+    if session[:sorted_by].nil? == 'title'
+      @title_color = ""
+      @release_date_color = ""
+    elsif session[:sorted_by] == 'title'
+      @title_color = "hilite bg-warning"
+      @release_date_color = ""
     else
-      @sorted_color = ""
+      @title_color = ""
+      @release_date_color = "hilite bg-warning"
     end
     
     
