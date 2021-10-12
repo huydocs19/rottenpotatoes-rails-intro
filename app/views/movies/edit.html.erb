@@ -8,5 +8,5 @@
   <%= date_select :movie, :release_date, {}, :class => 'form-control col-2 d-inline' %>
   <br/>
   <%= submit_tag 'Update Movie Info', :class => 'btn btn-primary' %>
-  <%= link_to 'Cancel', movies_path, :class => 'btn btn-secondary' %>
+  <%= link_to 'Cancel', movies_path(sorted_by: @sorted_by, ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] }), :class => 'btn btn-secondary' %>
 <% end %>

@@ -59,6 +59,8 @@ class MoviesController < ApplicationController
 
   def edit
     @movie = Movie.find params[:id]
+    @ratings_to_show = session[:ratings]
+    @sorted_by = session[:sorted_by]
   end
 
   def update
