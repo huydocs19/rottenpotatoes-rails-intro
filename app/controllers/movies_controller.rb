@@ -8,13 +8,22 @@ class MoviesController < ApplicationController
     @sorted_by = session[:sorted_by]
   end
 
-  def index
+  def index    
     if params[:ratings].nil? && params[:sorted_by].nil? && (
       !session[:sorted_by].nil? || !session[:ratings].nil?)      
       redirect_to movies_path(sorted_by: session[:sorted_by], ratings: session[:ratings].to_h { |rating| [rating, "1"] } )
+    end    
+    @all_ratings = Movie.all_ratings
+    if session[:sorted_by].nil?
+      @title_color = ""
+      @release_date_color = ""
+    elsif session[:sorted_by] == 'title'
+      @title_color = "hilite bg-warning"
+      @release_date_color = ""
+    else
+      @title_color = ""
+      @release_date_color = "hilite bg-warning"
     end
-    @ratings = params[:ratings]
-    @all_ratings = Movie.all_ratings      
     if params[:commit] == "Refresh"
         if params[:ratings]
           @ratings_to_show = params[:ratings].keys
@@ -32,21 +41,13 @@ class MoviesController < ApplicationController
     end    
     @movies = Movie.with_ratings(@ratings_to_show)
     if params[:sorted_by]
-      @movies = @movies.sorted_by(params[:sorted_by])
+      @movies = @movies.sorted_by(params[:sorted_by]) || @movies  
       session[:sorted_by] = params[:sorted_by]      
     else
       @movies = @movies.sorted_by(session[:sorted_by]) || @movies  
-    end    
-    if session[:sorted_by].nil? == 'title'
-      @title_color = ""
-      @release_date_color = ""
-    elsif session[:sorted_by] == 'title'
-      @title_color = "hilite bg-warning"
-      @release_date_color = ""
-    else
-      @title_color = ""
-      @release_date_color = "hilite bg-warning"
-    end
+    end  
+    
+    
     
     
     
