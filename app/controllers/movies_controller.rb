@@ -19,8 +19,12 @@ class MoviesController < ApplicationController
       elsif !session[:ratings].nil?
         redirect_to movies_path(ratings: session[:ratings].to_h { |rating| [rating, "1"] })
       end
-      
-    end    
+    elsif params[:ratings].nil? && !session[:ratings].nil?
+      redirect_to movies_path(sorted_by: params[:sorted_by], ratings: session[:ratings].to_h { |rating| [rating, "1"] })
+    elsif params[:sorted_by].nil? && !session[:sorted_by].nil?
+      redirect_to movies_path(sorted_by: session[:sorted_by], ratings: params[:ratings].to_h { |rating| [rating, "1"] })
+    end  
+    
     @all_ratings = Movie.all_ratings
     if !params[:ratings].nil?
       @ratings_to_show = params[:ratings].keys
@@ -46,10 +50,6 @@ class MoviesController < ApplicationController
       @title_color = ""
       @release_date_color = "hilite bg-warning"
     end
-    
-    
-    
-    
   end
 
   def new
