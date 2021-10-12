@@ -2,7 +2,7 @@
 <h2>All Movies</h2>
 
 <%#  Part 1: Start here... %>
-<%= form_tag movies_path(update: '1'), method: :get, id: 'ratings_form' do %>
+<%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">
@@ -16,9 +16,9 @@
 <table class="table table-striped col-md-12" id="movies">  
   <thead>
     <tr>     
-      <th class="<%=@title_color%>"><%= link_to "Movie Title", movies_path(sorted_by: 'title', ratings: session[:ratings].to_h { |rating| [rating, "1"]}), id: 'title_header'%></th>
+      <th class="<%=@title_color%>"><%= link_to "Movie Title", movies_path(sorted_by: 'title', ratings: @ratings_to_show.to_h { |rating| [rating, "1"]}), id: 'title_header'%></th>
       <th>Rating</th>
-      <th class="<%=@release_date_color%>"><%= link_to "Release Date", movies_path(sorted_by: 'release_date', ratings: session[:ratings].to_h { |rating| [rating, "1"]}), id: 'release_date_header'%></th>
+      <th class="<%=@release_date_color%>"><%= link_to "Release Date", movies_path(sorted_by: 'release_date', ratings: @ratings_to_show.to_h { |rating| [rating, "1"]}), id: 'release_date_header'%></th>
       <th>More Info</th>
     </tr>
   </thead>
