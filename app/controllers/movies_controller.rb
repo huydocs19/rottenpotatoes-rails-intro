@@ -8,7 +8,11 @@ class MoviesController < ApplicationController
     @sorted_by = session[:sorted_by]
   end
 
-  def index    
+  def index
+    if params[:ratings].nil? && params[:sorted_by].nil? && (
+      !session[:sorted_by].nil? || !session[:ratings].nil?)      
+      redirect_to movies_path(sorted_by: session[:sorted_by], ratings: session[:ratings].to_h { |rating| [rating, "1"] } )
+    end
     @ratings = params[:ratings]
     @all_ratings = Movie.all_ratings      
     if params[:commit] == "Refresh"
@@ -59,9 +63,7 @@ class MoviesController < ApplicationController
   end
 
   def edit
-    @movie = Movie.find params[:id]
-    @ratings_to_show = session[:ratings]
-    @sorted_by = session[:sorted_by]
+    @movie = Movie.find params[:id]    
   end
 
   def update
@@ -71,9 +73,7 @@ class MoviesController < ApplicationController
     redirect_to movie_path(@movie)
   end
 
-  def destroy
-    @ratings_to_show = session[:ratings]
-    @sorted_by = session[:sorted_by]
+  def destroy    
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
