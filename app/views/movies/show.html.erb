@@ -15,10 +15,12 @@
 <h3>Description:</h3>
 <p id="description">
   <%= @movie.description %>
+  <%= @sorted_by %>  
+  <%= @ratings_to_show.to_h { |a_i| [a_i, 1] } %>
 </p>
 
 <div class="row">
   <%= link_to 'Edit', edit_movie_path(@movie), :class => 'btn btn-primary col-2' %>
   <%= link_to 'Delete', movie_path(@movie), 'data-method' => 'delete', 'data-confirm' => 'Are you sure?', :class => 'btn btn-danger col-2' %>
-  <%= link_to 'Back to movie list', movies_path(sorted_by: 'release_date', ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] }), :class => 'btn btn-primary col-2' %>
+  <%= link_to 'Back to movie list', movies_path(sorted_by: @sorted_by, ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] }), :class => 'btn btn-primary col-2' %>
 </div>
