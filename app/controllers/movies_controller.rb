@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
 
   def index    
     @ratings = params[:ratings]
-    @all_ratings = Movie.all_ratings 
+    @all_ratings = Movie.all_ratings      
     if params[:commit] == "Refresh"
         if params[:ratings]
           @ratings_to_show = params[:ratings].keys
@@ -23,7 +23,7 @@ class MoviesController < ApplicationController
         if session[:ratings].nil? || session[:ratings].empty?
           @ratings_to_show = @all_ratings
         else
-          @ratings_to_show = session[:ratings]          
+          @ratings_to_show = session[:ratings]
         end
     end    
     @movies = Movie.with_ratings(@ratings_to_show)
@@ -31,8 +31,8 @@ class MoviesController < ApplicationController
       @movies = @movies.sorted_by(params[:sorted_by])
       session[:sorted_by] = params[:sorted_by]      
     else
-      @movies = @movies.sorted_by(session[:sorted_by]) || @movies      
-    end
+      @movies = @movies.sorted_by(session[:sorted_by]) || @movies  
+    end    
     if session[:sorted_by].nil? == 'title'
       @title_color = ""
       @release_date_color = ""
@@ -43,6 +43,7 @@ class MoviesController < ApplicationController
       @title_color = ""
       @release_date_color = "hilite bg-warning"
     end
+    
     
     
   end
@@ -76,7 +77,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
-    redirect_to movies_path(sorted_by: @sorted_by, ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] })
+    redirect_to movies_path
   end
 
   private

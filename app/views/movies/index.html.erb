@@ -10,15 +10,15 @@
       <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show.include?(rating), class: 'form-check-input' %>
     </div>
   <% end %>  
-  <%= submit_tag 'Refresh', data: { filtering: "1" }, id: 'ratings_submit', class: 'btn btn-primary' %>
+  <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
 <% end %>
 
 <table class="table table-striped col-md-12" id="movies">  
   <thead>
     <tr>     
-      <th class="<%=@title_color%>"><%= link_to "Movie Title", movies_path(sorted_by: 'title', ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] }), id: 'title_header'%></th>
+      <th class="<%=@title_color%>"><%= link_to "Movie Title", movies_path(sorted_by: 'title'), id: 'title_header'%></th>
       <th>Rating</th>
-      <th class="<%=@release_date_color%>"><%= link_to "Release Date", movies_path(sorted_by: 'release_date', ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] }), id: 'release_date_header'%></th>
+      <th class="<%=@release_date_color%>"><%= link_to "Release Date", movies_path(sorted_by: 'release_date'), id: 'release_date_header'%></th>
       <th>More Info</th>
     </tr>
   </thead>
