@@ -7,7 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index    
-    
+    @ratings = params[:ratings]
     @all_ratings = Movie.all_ratings
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
       @ratings_to_show = []
     end
     @movies = Movie.with_ratings(@ratings_to_show)
-     
+    @movies = @movies.sorted_by(params[:sorted_by]) || @movies
   end
 
   def new

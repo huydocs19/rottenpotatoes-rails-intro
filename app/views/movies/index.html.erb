@@ -15,10 +15,10 @@
 
 <table class="table table-striped col-md-12" id="movies">
   <thead>
-    <tr>
-      <th>Movie Title</th>
+    <tr>     
+      <th><%= link_to "Movie Title", movies_path(sorted_by: 'title', ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] }), id: 'title_header' %></th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th><%= link_to "Release Date", movies_path(sorted_by: 'release_date', ratings: @ratings_to_show.to_h { |a_i| [a_i, 1] }), id: 'title_header' %></th>
       <th>More Info</th>
     </tr>
   </thead>

@@ -9,4 +9,9 @@ class Movie < ActiveRecord::Base
   # if ratings_list is nil, retrieve ALL movies
     Movie.where({rating: ratings_list})
   end 
+  def self.sorted_by(column_name)  
+    if column_name
+      Movie.order("#{column_name} ASC")
+    end    
+  end 
 end
