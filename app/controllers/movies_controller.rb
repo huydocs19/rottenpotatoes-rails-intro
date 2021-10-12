@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
 
   def index    
     @ratings = params[:ratings]
-    @all_ratings = Movie.all_ratings    
+    @all_ratings = Movie.all_ratings 
     if params[:commit] == "Refresh"
         if params[:ratings]
           @ratings_to_show = params[:ratings].keys
@@ -18,7 +18,11 @@ class MoviesController < ApplicationController
           @ratings_to_show = []
         end
     else
-        @ratings_to_show = []
+        if session[:ratings].empty?
+          @ratings_to_show = @all_ratings
+        else
+          @ratings_to_show = session[:ratings]
+        end
     end    
     @movies = Movie.with_ratings(@ratings_to_show)
     if params[:sorted_by]
